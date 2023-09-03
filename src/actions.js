@@ -2,11 +2,15 @@ import axios from "axios";
 
 export const NOT_EKLE = "NOT_EKLE";
 export const NOT_SIL = "NOT_SIL";
+export const SET_LIST = "SET_LIST";
 
 export function notEkle(not) {
   // ...{}
   return { type: NOT_EKLE, payload: not };
 }
+export const setList = () => {
+  return { type: SET_LIST };
+};
 
 export function notSil(notId) {
   // ...
@@ -19,6 +23,8 @@ export const notEkleAPI = (yeniNot) => (dispatch) => {
     .then((res) => {
       if (res.status === 200) {
         dispatch(notEkle(res.data.json));
+        dispatch(setList());
+
         // res.data objesi içerisinden ihtiyaç duyduğunuz değeri bulun ve oluşturduğunuz notEkle ile dispatch edin
       }
     })
@@ -33,6 +39,7 @@ export const notSilAPI = (id) => (dispatch) => {
       if (res.status === 200) {
         // res.data objesi içerisinden ihtiyaç duyduğunuz değeri bulun ve oluşturduğunuz notSil ile dispatch edin
         dispatch(notSil(res.data.data));
+        dispatch(setList());
       }
     })
     .catch((error) => console.log(error));

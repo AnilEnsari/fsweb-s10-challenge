@@ -1,4 +1,4 @@
-import { NOT_EKLE, NOT_SIL } from "./actions";
+import { NOT_EKLE, NOT_SIL, SET_LIST } from "./actions";
 
 const s10chLocalStorageKey = "s10ch";
 
@@ -30,7 +30,10 @@ function baslangicNotlariniGetir(key) {
   }
 }
 
-export function myReducer(state = baslangicDegerleri, action) {
+export function myReducer(
+  state = baslangicNotlariniGetir(s10chLocalStorageKey),
+  action
+) {
   switch (action.type) {
     case NOT_SIL:
       return {
@@ -40,6 +43,9 @@ export function myReducer(state = baslangicDegerleri, action) {
 
     case NOT_EKLE:
       return { ...state, notlar: [...state.notlar, action.payload] };
+    case SET_LIST:
+      localStorageStateYaz(s10chLocalStorageKey, state);
+      return state;
 
     default:
       return state;
